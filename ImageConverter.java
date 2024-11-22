@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import java.nio.file.Paths;
 
 public class ImageConverter {
     
@@ -100,7 +99,6 @@ public class ImageConverter {
                 int green = (int)(255 * Math.pow(color.getGreen() / 255.0, gamma));
                 int blue = (int)(255 * Math.pow(color.getBlue() / 255.0, gamma));
 
-                // Clamping values between 0 and 255
                 int GCRed = Math.min(255, Math.max(0, red));
                 int GCGreen = Math.min(255, Math.max(0, green));
                 int GCBlue = Math.min(255, Math.max(0, blue));
@@ -120,12 +118,10 @@ public class ImageConverter {
         POSTERIZATION {
             @Override
             public int applyTransformation(Color color, int levels) {
-                // Apply posterization for each color channel
                 int red = (color.getRed() / levels) * levels;
                 int green = (color.getGreen() / levels) * levels;
                 int blue = (color.getBlue() / levels) * levels;
 
-                // Ensure values are within RGB range [0, 255]
                 red = Math.min(255, Math.max(0, red));
                 green = Math.min(255, Math.max(0, green));
                 blue = Math.min(255, Math.max(0, blue));
@@ -149,7 +145,7 @@ public class ImageConverter {
     }
 
     public static void convertImage(String inputFilePath, ConversionType conversionType) {
-        convertImage(inputFilePath, conversionType, 0, 0);  // Use default values for gamma and levels
+        convertImage(inputFilePath, conversionType, 0, 0);
     }
 
     public static void convertImage(String inputFilePath, ConversionType conversionType, double gamma, int levels){
