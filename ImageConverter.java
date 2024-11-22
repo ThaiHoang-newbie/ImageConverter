@@ -182,12 +182,18 @@ public class ImageConverter {
                     Color color = new Color(pixel);
 
                     int transformedPixel;
-                    if (conversionType == ConversionType.GAMMA_CORRECTION) {
-                        transformedPixel = conversionType.applyTransformation(color, gamma);
-                    } else if (conversionType == ConversionType.POSTERIZATION) {
-                        transformedPixel = conversionType.applyTransformation(color, levels);
-                    } else {
+                    if (null == conversionType) {
                         transformedPixel = conversionType.applyTransformation(color);
+                    } else switch (conversionType) {
+                        case GAMMA_CORRECTION:
+                            transformedPixel = conversionType.applyTransformation(color, gamma);
+                            break;
+                        case POSTERIZATION:
+                            transformedPixel = conversionType.applyTransformation(color, levels);
+                            break;
+                        default:
+                            transformedPixel = conversionType.applyTransformation(color);
+                            break;
                     }
 
                     processedImage.setRGB(x, y, transformedPixel);
